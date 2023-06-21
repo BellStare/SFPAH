@@ -1,6 +1,6 @@
 <?php
 
-$conn = new mysqli("localhost","root","","DBSFPAH");
+$conn = new mysqli("localhost:3306","root","guerra2350","dbsfpah");
 
 if($conn->connect_errno)
 {
