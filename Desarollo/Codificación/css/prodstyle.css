@@ -60,7 +60,7 @@ img
 	
 }
 
-a,input[type="submit"],button
+.boton-limpiar, .boton-quitar, .redireccion, input[type="submit"], button
 {
 	font-size: 14px;
 	text-align:center;
@@ -73,6 +73,10 @@ a,input[type="submit"],button
 	color:black;
 	border:1px solid black;
 	cursor:pointer;
+}
+
+a:link, a:visited, a:active {
+	text-decoration:none;
 }
 
 hr
