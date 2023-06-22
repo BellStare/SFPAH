@@ -15,101 +15,74 @@ $usar_db = new DBControl();
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
-    <!-- Header Section Begin -->
-    <header class="header">
-        <div class="container">
-            <div class="row">
-
-                <div class="col-lg-8">
-                    <div class="header__nav">
-                        <nav class="header__menu mobile-menu">
-                            <ul>
-                                <li><a href="./Homepage.html">Inicio</a></li>
-                                <li><a href="./prodslct.php">Buscar producto</a></li>
-                                <li><a href="./SFPAH-VHP.php">Historial</a></li>
-                                <li><a href="./Favoritos.html">Favoritos</a></li>
-                                <li><a></a></li>
-                                <li><a></a></li>
-                                <li><a href="./index.html">Cerrar sesión</a></li>
-                            </ul>
-                        </nav>
+<div align="center"><h1 style="color: white;">Historial de precios</h1></div>
+<div align="center">
+    <form action="" method="get">
+        <input type="text" name="busqueda" style="width: 300px; height: 30px;" /><br>
+        <input type="submit" name="enviar" value="Buscar" />
+    </form>
+    <br>
+</div>
+<?php
+if(isset($_GET['enviar']))
+{
+    $busqueda = $_GET['busqueda'];
+    $consulta = $usar_db->vaiQuery("SELECT * FROM productos WHERE nom LIKE '%$busqueda%'");
+    foreach($consulta as $i => $k)
+    {
+        ?>
+        <div class="contenedor_productos">
+            <form method="POST" action="">
+                <div><img src="<?php echo $consulta[$i]["img"]; ?>"></div>
+                <div>
+                    <div style="padding-top:20px;font-size:18px;"><?php echo $consulta[$i]["nom"]; ?></div>
+                    <div style="padding-top:10px;font-size:20px;"><?php echo "S/.".$consulta[$i]["pre"]; ?></div>
+                    <div>
+                        <input type="hidden" name="cod" value="<?php echo $consulta[$i]["cod"]; ?>" />
+                        <input type="submit" name="agregar" value="Historial" />
                     </div>
                 </div>
-
-            </div>
-            <div id="mobile-menu-wrap"></div>
+            </form>
         </div>
-    </header>
-    <!-- Header End -->
-    <div align="center"><h1 style="color: white;">Historial de precios</h1></div>
-    <div align="center">
-        <form action="" method="get">
-            <input type="text" name="busqueda" style="width: 300px; height: 30px;" /><br>
-            <input type="submit" name="enviar" value="Buscar" />
-        </form>
-        <br>
-    </div>
+        <?php
+        if (isset($_POST['agregar'])) {
+            $productCod = $_POST['cod'];
+            $priceData = $usar_db->vaiQuery("SELECT fecha, pre FROM historial_precios WHERE prod_cod = '$productCod'");
 
-    <?php
-    if(isset($_GET['enviar']))
-    {
-        $busqueda = $_GET['busqueda'];
-        $consulta = $usar_db->vaiQuery("SELECT * FROM productos WHERE nom LIKE '%$busqueda%'");
-        foreach($consulta as $i => $k)
-        {
-            ?>
-            <div class="contenedor_productos">
-                <form method="POST" action="">
-                    <div><img src="<?php echo $consulta[$i]["img"]; ?>"></div>
-                    <div>
-                        <div style="padding-top:20px;font-size:18px;"><?php echo $consulta[$i]["nom"]; ?></div>
-                        <div style="padding-top:10px;font-size:20px;"><?php echo "S/.".$consulta[$i]["pre"]; ?></div>
-                        <div>
-                            <input type="hidden" name="cod" value="<?php echo $consulta[$i]["cod"]; ?>" />
-                            <input type="submit" name="agregar" value="Historial" />
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <?php
-            if (isset($_POST['agregar'])) {
-                $productCod = $_POST['cod'];
-                $priceData = $usar_db->vaiQuery("SELECT fecha, pre FROM historial_precios WHERE prod_cod = '$productCod'");
-
-                // Prepare data for the graph
-                $dates = array();
-                $prices = array();
-                foreach ($priceData as $data) {
-                    $dates[] = $data['fecha'];
-                    $prices[] = $data['pre'];
-                }
-
-                // Create the graph using Plotly
-                echo '<div id="graph"></div>';
-                echo "<script>
-                        var dates = " . json_encode($dates) . ";
-                        var prices = " . json_encode($prices) . ";
-
-                        var trace = {
-                            x: dates,
-                            y: prices,
-                            type: \"scatter\",
-                            mode: \"lines+markers\",
-                            marker: {size: 6},
-                            line: {shape: \"spline\"}
-                        };
-
-                        var layout = {
-                            title: \"Historial de precio\",
-                            xaxis: {title: \"Fecha\"},
-                            yaxis: {title: \"Precio\"}
-                        };
-
-                        Plotly.newPlot(\"graph\", [trace], layout);
-                    </script>";
+            // Prepare data for the graph
+            $dates = array();
+            $prices = array();
+            foreach ($priceData as $data) {
+                $dates[] = $data['fecha'];
+                $prices[] = $data['pre'];
             }
+
+            // Create the graph using Plotly
+            echo '<div id="graph"></div>';
+            echo "<script>
+                    var dates = " . json_encode($dates) . ";
+                    var prices = " . json_encode($prices) . ";
+                    
+                    var trace = {
+                        x: dates,
+                        y: prices,
+                        type: \"scatter\",
+                        mode: \"lines+markers\",
+                        marker: {size: 6},
+                        line: {shape: \"spline\"}
+                    };
+                    
+                    var layout = {
+                        title: \"Historial de precio\",
+                        xaxis: {title: \"Fecha\"},
+                        yaxis: {title: \"Precio\"}
+                    };
+                    
+                    Plotly.newPlot(\"graph\", [trace], layout);
+                </script>";
         }
     }
-    ?>
+}
+?>
 </body>
 </html>
