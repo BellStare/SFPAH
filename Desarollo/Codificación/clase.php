@@ -1,4 +1,4 @@
-<?php
+	<?php
 class DBControl {
 	private $conn;
 	
@@ -9,7 +9,7 @@ class DBControl {
 	
 	function conectarDB() 
 	{
-		$conn = mysqli_connect("localhost:3306","root","guerra2350","dbsfpah");
+		$conn = mysqli_connect("localhost","root","","DBSFPAH");
 		return $conn;
 	}
 	

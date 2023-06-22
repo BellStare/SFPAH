@@ -82,25 +82,26 @@ CREATE TABLE `productos` (
   `img` text NOT NULL,
   `cod` varchar(50) NOT NULL,
   `nom` varchar(50) NOT NULL,
-  `pre` double(10,2) NOT NULL
+  `pre` double(10,2) NOT NULL,
+  `url` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `productos`
 --
 
-INSERT INTO `productos` (`id`, `img`, `cod`, `nom`, `pre`) VALUES
-(1, 'img/catalogo/arroz.jpg', 'PA-001', 'Arroz', 3.50),
-(3, 'img/catalogo/cebollas.jpg', 'PA-002', 'Cebollas', 3.30),
-(4, 'img/catalogo/leche.jpg', 'PA-003', 'Leche fresca', 1.50),
-(5, 'img/catalogo/lentejas.jpg', 'PA-004', 'Lentejas', 5.00),
-(6, 'img/catalogo/mantequilla.jpg', 'PA-005', 'Mantequilla', 2.20),
-(7, 'img/catalogo/panes.jpg', 'PA-006', 'Panes', 1.50),
-(8, 'img/catalogo/fideos.jpg', 'PA-007', 'Fideos', 2.50),
-(9, 'img/catalogo/pescado.jpg', 'PA-008', 'Pescado', 4.50),
-(10, 'img/catalogo/pollo.jpg', 'PA-009', 'Pollo', 10.00),
-(11, 'img/catalogo/queso.jpg', 'PA-010', 'Queso', 8.00),
-(12, 'img/catalogo/zanahorias.jpg', 'PA-011', 'Zanahorias', 2.50);
+INSERT INTO `productos` (`id`, `img`, `cod`, `nom`, `pre`,`url`) VALUES
+(1, 'img/catalogo/arroz.jpg', 'PA-001', 'Arroz', 3.50,'https://www.metro.pe/arroz-superior-valle-norte-primera-cosecha-bolsa-750-g/p'),
+(3, 'img/catalogo/cebollas.jpg', 'PA-002', 'Cebollas', 4.00,'https://www.plazavea.com.pe/cebolla-blanca/p'),
+(4, 'img/catalogo/leche.jpg', 'PA-003', 'Leche fresca', 4.20,'https://tottus.falabella.com.pe/tottus-pe/product/115807109/leche-gloria-reconstituida-400gr/115807111'),
+(5, 'img/catalogo/lentejas.jpg', 'PA-004', 'Lentejas', 5.00,'https://tottus.falabella.com.pe/tottus-pe/product/113709037/tottus-lenteja-40330079/113709039?'),
+(6, 'img/catalogo/mantequilla.jpg', 'PA-005', 'Mantequilla', 2.20,'https://www.metro.pe/mantequilla-con-sal-gloria-200g-2/p?'),
+(7, 'img/catalogo/panes.jpg', 'PA-006', 'Panes', 8.42,'https://tottus.falabella.com.pe/tottus-pe/product/113708458/pan-bimbo-molde-rebanado-480gr-np/113708459'),
+(8, 'img/catalogo/fideos.jpg', 'PA-007', 'Fideos', 1.80,'https://www.metro.pe/cabello-de-angel-nicolini-250g/p'),
+(9, 'img/catalogo/pescado.jpg', 'PA-008', 'Pescado', 6.00,'https://www.plazavea.com.pe/pescado-bonito-entero-fresco/p'),
+(10, 'img/catalogo/pollo.jpg', 'PA-009', 'Pollo', 10.00,'https://www.plazavea.com.pe/pollo-fresco-con-menudencia/p?'),
+(11, 'img/catalogo/queso.jpg', 'PA-010', 'Queso Mozzarella', 11.50,'https://www.metro.pe/queso-mozzarella-bonle-bola-250-g-2/p'),
+(12, 'img/catalogo/zanahorias.jpg', 'PA-011', 'Zanahorias', 3.00,'https://www.plazavea.com.pe/zanahoria-b/p');
 
 --
 -- Indexes for dumped tables
