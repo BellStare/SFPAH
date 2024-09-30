@@ -1,6 +1,12 @@
 <?php
 session_start();
-
+if (!isset($_SESSION['CREATED'])) {
+    $_SESSION['CREATED'] = time();
+} else if (time() - $_SESSION['CREATED'] > 1800) {
+    // La sesión tiene más de 30 minutos de duración, regeneramos ID
+    session_regenerate_id(true);
+    $_SESSION['CREATED'] = time();
+}
 require_once("clase.php");
 
 $usar_db = new DBControl();
@@ -10,9 +16,13 @@ if(!empty($_GET["accion"]))
 switch($_GET["accion"]) 
 {
 	case "agregar":
-		if(!empty($_POST["txtcantidad"])) 
+
+		$txtcantidad = filter_input(INPUT_POST, 'txtcantidad', FILTER_VALIDATE_INT);
+		$cod = filter_input(INPUT_GET, 'cod', FILTER_SANITIZE_STRING);
+
+		if ($txtcantidad && $cod){ 
 		{
-			$codproducto = $usar_db->vaiQuery("SELECT * FROM productos WHERE cod='" . $_GET["cod"] . "'");
+			$codproducto = $usar_db->vaiQuery("SELECT * FROM productos WHERE cod='" . $cod . "'");
 			$items_array = array($codproducto[0]["cod"]=>array(
 			'vai_nom'		=>$codproducto[0]["nom"], 
 			'vai_cod'		=>$codproducto[0]["cod"], 
